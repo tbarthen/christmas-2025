@@ -242,15 +242,26 @@
             </div>
         </div>
 
-        <!-- Scene 5: Window View (video) -->
+        <!-- Scene 5: Window View (video) - first half of closing -->
         <div class="slide" id="slide5">
-            <video id="video5" muted playsinline>
+            <video id="video5" muted playsinline loop>
                 <source src="scene6.mp4" type="video/mp4">
             </video>
             <div class="text-overlay" id="text5">
                 <div class="text-content">
                     No need for the fuss or the lights on the lawn,<br>
-                    Just two people together from dusk until dawn.<br><br>
+                    Just two people together from dusk until dawn.
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 6: Window View (video) - second half of closing -->
+        <div class="slide" id="slide6">
+            <video id="video6" muted playsinline loop>
+                <source src="scene6.mp4" type="video/mp4">
+            </video>
+            <div class="text-overlay" id="text6">
+                <div class="text-content">
                     And we thought from out west as the holidays start,<br>
                     Just know that you two have a place in our heart.
                 </div>
@@ -260,9 +271,9 @@
             </div>
         </div>
 
-        <!-- Scene 6: Family Message (over snow video) -->
-        <div class="slide" id="slide6">
-            <video id="video6" muted playsinline loop>
+        <!-- Scene 7: Family Message (over snow video) -->
+        <div class="slide" id="slide7">
+            <video id="video7" muted playsinline loop>
                 <source src="scene6.mp4" type="video/mp4">
             </video>
             <div class="family-overlay">
@@ -279,12 +290,13 @@
 
     <script>
         const slides = [
-            { id: 1, type: 'video', duration: 10000 },
-            { id: 2, type: 'image', duration: 10000 },
-            { id: 3, type: 'video', duration: 10000, pingPong: true },
-            { id: 4, type: 'image', duration: 10000 },
-            { id: 5, type: 'video', duration: 18000 },
-            { id: 6, type: 'video', duration: 0, isFinal: true }
+            { id: 1, type: 'video', duration: 7000 },
+            { id: 2, type: 'image', duration: 6000 },
+            { id: 3, type: 'video', duration: 7000, pingPong: true },
+            { id: 4, type: 'image', duration: 7000 },
+            { id: 5, type: 'video', duration: 7000 },
+            { id: 6, type: 'video', duration: 9000 },
+            { id: 7, type: 'video', duration: 0, isFinal: true }
         ];
 
         let currentSlide = 0;
@@ -356,7 +368,7 @@
 
             // Show text after a brief delay
             setTimeout(() => {
-                textEl.classList.add('visible');
+                if (textEl) textEl.classList.add('visible');
             }, 500);
 
             // Handle video playback
@@ -366,7 +378,7 @@
                 
                 if (slide.id === 1) {
                     // Slow down video 1 to fill the display time, no loop
-                    video.playbackRate = 0.5;
+                    video.playbackRate = 0.7;
                     video.loop = false;
                 } else if (slide.id === 3) {
                     // Cat video - normal speed, ping-pong handled by event listener
@@ -382,8 +394,8 @@
                 video.play();
             }
 
-            // Show signature on slide 5 (parents' ending)
-            if (slide.id === 5) {
+            // Show signature on slide 6 (parents' ending)
+            if (slide.id === 6) {
                 setTimeout(() => {
                     document.getElementById('signature').classList.add('visible');
                 }, 3000);
