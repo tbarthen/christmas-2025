@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a1a;
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+        }
+
+        .slideshow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            pointer-events: none;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .slide.fading-out {
+            opacity: 0;
+        }
+
+        .slide video,
+        .slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .text-overlay {
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            max-width: 85%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .text-overlay.visible {
+            opacity: 1;
+        }
+
+        .text-content {
+            background: rgba(0, 0, 0, 0.6);
+            color: #f5f0e6;
+            padding: 20px 35px;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .signature {
+            margin-top: 15px;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: #e8dcc8;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .signature.visible {
+            opacity: 1;
+        }
+
+        .family-message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #f5f0e6;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 25px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .family-message.visible {
+            opacity: 1;
+        }
+
+        .family-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .family-overlay .family-message {
+            font-size: 2rem;
+            text-align: center;
+            padding: 50px 60px;
+            max-width: 80%;
+            line-height: 1.8;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .watch-again {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(139, 90, 43, 0.8);
+            color: #f5f0e6;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-family: 'Georgia', serif;
+            border-radius: 25px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, background 0.3s;
+            pointer-events: none;
+        }
+
+        .watch-again.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .watch-again:hover {
+            background: rgba(139, 90, 43, 1);
+        }
+
+        @media (max-width: 768px) {
+            .text-content {
+                font-size: 1.1rem;
+                padding: 15px 25px;
+            }
+            .signature {
+                font-size: 1.2rem;
+            }
+            .family-message {
+                font-size: 1rem;
+            }
+            .family-overlay .family-message {
+                font-size: 1.5rem;
+                padding: 35px 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .text-content {
+                font-size: 0.95rem;
+                padding: 12px 20px;
+            }
+            .text-overlay {
+                max-width: 95%;
+            }
+            .family-message {
+                font-size: 0.9rem;
+                padding: 12px 18px;
+            }
+            .family-overlay .family-message {
+                font-size: 1.1rem;
+                padding: 25px 20px;
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Scene 1: Snowy Street (video) -->
+        <div class="slide" id="slide1">
+            <video id="video1" muted playsinline>
+                <source src="scene1.mp4" type="video/mp4">
+            </video>
+            <div class="text-overlay" id="text1">
+                <div class="text-content">
+                    'Twas the night before Christmas in Superior's north end,<br>
+                    With a new furnace running, so the warm doesn't end.
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 2: Pop-up Cards (image) -->
+        <div class="slide" id="slide2">
+            <img src="scene3.webp" alt="Pop-up cards">
+            <div class="text-overlay" id="text2">
+                <div class="text-content">
+                    The pop-up cards lined up all standing in rows,<br>
+                    A small paper village continuing to grow.
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 3: Sleeping Cat (video - ping pong) -->
+        <div class="slide" id="slide3">
+            <video id="video3" muted playsinline>
+                <source src="scene4.mp4" type="video/mp4">
+            </video>
+            <div class="text-overlay" id="text3">
+                <div class="text-content">
+                    The cat was curled up, not a creature did stir,<br>
+                    Not even the north end rat covered in fur.
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 4: Couple (image) -->
+        <div class="slide" id="slide4">
+            <img src="scene5.webp" alt="Couple together">
+            <div class="text-overlay" id="text4">
+                <div class="text-content">
+                    With Mom in her slippers and Dad in his chair,<br>
+                    The holiday spirit was simple but there.
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 5: Window View (video) -->
+        <div class="slide" id="slide5">
+            <video id="video5" muted playsinline>
+                <source src="scene6.mp4" type="video/mp4">
+            </video>
+            <div class="text-overlay" id="text5">
+                <div class="text-content">
+                    No need for the fuss or the lights on the lawn,<br>
+                    Just two people together from dusk until dawn.<br><br>
+                    And we thought from out west as the holidays start,<br>
+                    Just know that you two have a place in our heart.
+                </div>
+                <div class="signature" id="signature">
+                    Love, Tom &amp; Hema...
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 6: Family Message (over snow video) -->
+        <div class="slide" id="slide6">
+            <video id="video6" muted playsinline loop>
+                <source src="scene6.mp4" type="video/mp4">
+            </video>
+            <div class="family-overlay">
+                <div class="family-message" id="familyMessage">
+                    To Patty, Lisa, and Bob — and all your families —<br><br>
+                    hope your holidays are warm, peaceful,<br>
+                    and surrounded by the people who matter most.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="watch-again" id="watchAgain">Watch Again</button>
+
+    <script>
+        const slides = [
+            { id: 1, type: 'video', duration: 10000 },
+            { id: 2, type: 'image', duration: 10000 },
+            { id: 3, type: 'video', duration: 10000, pingPong: true },
+            { id: 4, type: 'image', duration: 10000 },
+            { id: 5, type: 'video', duration: 18000 },
+            { id: 6, type: 'video', duration: 0, isFinal: true }
+        ];
+
+        let currentSlide = 0;
+        let slideTimer = null;
+        let video3Direction = 1; // 1 = forward, -1 = reverse
+        
+        // Tweak these in console: transitionDelay, reverseStep
+        window.transitionDelay = 30; // ms pause before reverse
+        window.reverseStep = 1/60;   // frame step size (smaller = smoother but slower)
+
+        // Smooth ping-pong for video 3 (cat breathing)
+        const video3 = document.getElementById('video3');
+        if (video3) {
+            video3.addEventListener('ended', () => {
+                video3Direction = -1;
+                setTimeout(() => playVideo3Reverse(), window.transitionDelay);
+            });
+        }
+
+        function playVideo3Reverse() {
+            const video = document.getElementById('video3');
+            
+            function stepBack() {
+                if (video.currentTime > 0 && video3Direction === -1) {
+                    video.currentTime = Math.max(0, video.currentTime - window.reverseStep);
+                    requestAnimationFrame(stepBack);
+                } else if (video3Direction === -1) {
+                    video3Direction = 1;
+                    video.currentTime = 0;
+                    video.play();
+                }
+            }
+            stepBack();
+        }
+
+        function showSlide(index) {
+            // Fade out previous slides (don't immediately hide)
+            document.querySelectorAll('.slide.active').forEach(s => {
+                s.classList.add('fading-out');
+                s.classList.remove('active');
+            });
+            
+            // Clear fading-out class after transition completes
+            setTimeout(() => {
+                document.querySelectorAll('.slide.fading-out').forEach(s => {
+                    s.classList.remove('fading-out');
+                });
+            }, 2000);
+            
+            document.querySelectorAll('.text-overlay').forEach(t => t.classList.remove('visible'));
+            document.getElementById('signature')?.classList.remove('visible');
+            document.getElementById('familyMessage')?.classList.remove('visible');
+            document.getElementById('watchAgain').classList.remove('visible');
+
+            // Pause all videos except the one we're showing
+            document.querySelectorAll('video').forEach(v => {
+                if (v.id !== `video${slides[index].id}`) {
+                    v.pause();
+                    v.currentTime = 0;
+                }
+            });
+
+            const slide = slides[index];
+            const slideEl = document.getElementById(`slide${slide.id}`);
+            const textEl = document.getElementById(`text${slide.id}`);
+
+            // Show slide
+            slideEl.classList.add('active');
+
+            // Show text after a brief delay
+            setTimeout(() => {
+                textEl.classList.add('visible');
+            }, 500);
+
+            // Handle video playback
+            if (slide.type === 'video') {
+                const video = document.getElementById(`video${slide.id}`);
+                video.currentTime = 0;
+                
+                if (slide.id === 1) {
+                    // Slow down video 1 to fill the display time, no loop
+                    video.playbackRate = 0.5;
+                    video.loop = false;
+                } else if (slide.id === 3) {
+                    // Cat video - normal speed, ping-pong handled by event listener
+                    video.playbackRate = 1;
+                    video.loop = false;
+                    video3Direction = 1;
+                } else {
+                    // Loop other videos at normal speed
+                    video.playbackRate = 1;
+                    video.loop = true;
+                }
+                
+                video.play();
+            }
+
+            // Show signature on slide 5 (parents' ending)
+            if (slide.id === 5) {
+                setTimeout(() => {
+                    document.getElementById('signature').classList.add('visible');
+                }, 3000);
+            }
+
+            // Show family message on final slide
+            if (slide.isFinal) {
+                setTimeout(() => {
+                    document.getElementById('familyMessage').classList.add('visible');
+                }, 500);
+
+                // Show watch again button
+                setTimeout(() => {
+                    document.getElementById('watchAgain').classList.add('visible');
+                }, 4000);
+            }
+
+            // Set up transition to next slide
+            if (!slide.isFinal) {
+                slideTimer = setTimeout(() => {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }, slide.duration);
+            }
+        }
+
+        function startSlideshow() {
+            currentSlide = 0;
+            clearTimeout(slideTimer);
+            // Reset all slides
+            document.querySelectorAll('.slide').forEach(s => {
+                s.classList.remove('active', 'fading-out');
+            });
+            document.querySelectorAll('video').forEach(v => {
+                v.pause();
+                v.currentTime = 0;
+            });
+            showSlide(0);
+        }
+
+        // Watch again button
+        document.getElementById('watchAgain').addEventListener('click', startSlideshow);
+        
+        // Console helper: testCat() jumps to cat scene for testing
+        window.testCat = function() {
+            currentSlide = 2;
+            showSlide(2);
+        };
+
+        // Start on load
+        window.addEventListener('load', () => {
+            // Small delay to ensure everything is loaded
+            setTimeout(startSlideshow, 500);
+        });
+    </script>
+</body>
+</html>
